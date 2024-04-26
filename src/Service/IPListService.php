@@ -7,8 +7,8 @@ use InvalidArgumentException;
 use LogicException;
 use Madmatt\IPLists\Model\IP;
 use Madmatt\IPLists\Model\IPList;
+use Monolog\Level;
 use Monolog\Logger;
-use PageController;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\Session;
@@ -22,7 +22,7 @@ class IPListService
      */
     public $auditLogger;
 
-    private static $dependencies = [
+    private static array $dependencies = [
         'auditLogger' => '%$AuditLogger'
     ];
 
@@ -39,10 +39,7 @@ class IPListService
     public const IP_ACCESS_DENIED = 0;
     public const IP_ACCESS_AMBIVALENT = -1;
 
-    /**
-     * @var array
-     */
-    private $validLists = [];
+    private array $validLists = [];
 
     /**
      * Check all {@link IPList} objects to find any that match the given URL route. If one is found, confirm whether the
@@ -214,13 +211,13 @@ class IPListService
         switch ($allowOrDeny) {
             case self::IP_ACCESS_ALLOWED:
                 $message = $successLogMsg;
-                $logLevel = Logger::DEBUG;
+                $logLevel = Level::Debug;
                 $msgType = 'success';
                 break;
 
             case self::IP_ACCESS_DENIED:
                 $message = $failureLogMsg;
-                $logLevel = Logger::WARNING;
+                $logLevel = Level::Warning;
                 $msgType = 'failure';
                 break;
 

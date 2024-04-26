@@ -7,7 +7,7 @@ use SilverStripe\Dev\SapphireTest;
 
 class IPTest extends SapphireTest
 {
-    public function testContainsIP()
+    public function testContainsIP(): void
     {
         $ip = new IP([
             'IP' => '10.1.1.1',
@@ -22,7 +22,7 @@ class IPTest extends SapphireTest
         $this->assertFalse($ip->contains('::1'));
     }
 
-    public function testContainsCIDR()
+    public function testContainsCIDR(): void
     {
         $ip = new IP([
             'IP' => '10.1.1.1/24',

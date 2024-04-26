@@ -3,11 +3,9 @@
 namespace Madmatt\IPLists\Model;
 
 use Exception;
-use IPTools\Network;
 use IPTools\Range;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBField;
-use SilverStripe\ORM\FieldType\DBVarchar;
 use SilverStripe\ORM\ManyManyList;
 
 /**
@@ -30,9 +28,9 @@ use SilverStripe\ORM\ManyManyList;
  */
 class IP extends DataObject
 {
-    private static $singular_name = 'IP';
+    private static string $singular_name = 'IP';
 
-    private static $table_name = 'IPLists_IP';
+    private static string $table_name = 'IPLists_IP';
 
     private static $db = [
         'AddressType' => 'Enum(array("' . self::TYPE_IP . '","' . self::TYPE_CIDR . '"), "' . self::TYPE_IP . '")',
@@ -40,19 +38,19 @@ class IP extends DataObject
         'Title' => 'Varchar(200)',
     ];
 
-    private static $belongs_many_many = [
+    private static array $belongs_many_many = [
         'Lists' => IPList::class
     ];
 
-    private static $summary_fields = [
+    private static array $summary_fields = [
         'Title' => 'Title',
         'IP' => 'IP',
         'AddressType' => 'AddressType',
         'UsedInLists' => 'Used in...'
     ];
 
-    const TYPE_IP = 'IP';
-    const TYPE_CIDR = 'CIDR';
+    public const TYPE_IP = 'IP';
+    public const TYPE_CIDR = 'CIDR';
 
     public function getCMSFields()
     {

@@ -10,18 +10,11 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridField_ActionMenu;
 use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
-use SilverStripe\Forms\GridField\GridFieldAddNewButton;
 use SilverStripe\Forms\GridField\GridFieldButtonRow;
 use SilverStripe\Forms\GridField\GridFieldConfig;
-use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
-use SilverStripe\Forms\GridField\GridFieldDataColumns;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\Forms\GridField\GridFieldEditButton;
-use SilverStripe\Forms\GridField\GridFieldFilterHeader;
-use SilverStripe\Forms\GridField\GridFieldPageCount;
-use SilverStripe\Forms\GridField\GridFieldPaginator;
-use SilverStripe\Forms\GridField\GridFieldSortableHeader;
 use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\NumericField;
@@ -30,11 +23,8 @@ use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\FieldType\DBField;
-use SilverStripe\ORM\FieldType\DBHTMLVarchar;
 use Symbiote\GridFieldExtensions\GridFieldAddNewInlineButton;
 use Symbiote\GridFieldExtensions\GridFieldEditableColumns;
-use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 use Symbiote\GridFieldExtensions\GridFieldTitleHeader;
 
 /**
@@ -54,13 +44,13 @@ use Symbiote\GridFieldExtensions\GridFieldTitleHeader;
  */
 class IPList extends DataObject
 {
-    private static $singular_name = 'IP list';
+    private static string $singular_name = 'IP list';
 
-    private static $table_name = 'IPLists_IPList';
+    private static string $table_name = 'IPLists_IPList';
 
-    private static $default_sort = 'Priority DESC, ID ASC';
+    private static string $default_sort = 'Priority DESC, ID ASC';
 
-    private static $db = [
+    private static array $db = [
         'Title' => 'Varchar(200)',
         'Description' => 'Text',
         'Enabled' => 'Boolean',
@@ -70,24 +60,24 @@ class IPList extends DataObject
         'ProtectedRoutes' => 'Text',
     ];
 
-    private static $many_many = [
+    private static array $many_many = [
         'IPs' => IP::class
     ];
 
-    private static $many_many_extraFields = [
+    private static array $many_many_extraFields = [
         'IPs' => [
             'Sort' => 'Int'
         ]
     ];
 
-    private static $defaults = [
+    private static array $defaults = [
         'Enabled' => true,
         'Priority' => 100,
         'ListType' => self::LIST_TYPE_ALLOW,
         'DenyMethod' => self::DENY_METHOD_404,
     ];
 
-    private static $summary_fields = [
+    private static array $summary_fields = [
         'Title' => 'Title',
         'Description' => 'Description',
         'Enabled.Nice' => 'Is Enabled?',
@@ -95,11 +85,11 @@ class IPList extends DataObject
         'IPs.Count' => 'Number of IPs'
     ];
 
-    const LIST_TYPE_DENY = 'Deny';
-    const LIST_TYPE_ALLOW = 'Allow';
+    public const LIST_TYPE_DENY = 'Deny';
+    public const LIST_TYPE_ALLOW = 'Allow';
 
-    const DENY_METHOD_404 = 404;
-    const DENY_METHOD_400 = 400;
+    public const DENY_METHOD_404 = 404;
+    public const DENY_METHOD_400 = 400;
 
     public function getCMSFields()
     {

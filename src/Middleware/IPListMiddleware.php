@@ -5,26 +5,26 @@ namespace Madmatt\IPLists\Middleware;
 use Madmatt\IPLists\Service\IPListService;
 use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
-use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Control\Middleware\HTTPMiddleware;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 
 class IPListMiddleware implements HTTPMiddleware
 {
-    use Configurable, Injectable;
+    use Configurable;
+    use Injectable;
 
     /**
      * @var bool Defaults to true, set this to false via YML config to globally disable the middleware
      * @config
      */
-    private static $enabled = true;
+    private static bool $enabled = true;
 
     /**
      * @var bool Defaults to true, set this to false via YML config to disable the middleware on development enviroments
      * @config
      */
-    private static $enabled_on_dev = true;
+    private static bool $enabled_on_dev = true;
 
     /**
      * @var bool Defaults to false, set this to true via YML config to enable the middleware on the command-line
@@ -32,14 +32,14 @@ class IPListMiddleware implements HTTPMiddleware
      * extends *HTTPMiddleware*, so you'd only expect it to apply to HTTP requests but it also applies to cli).
      * @config
      */
-    private static $enabled_on_cli = false;
+    private static bool $enabled_on_cli = false;
 
     /**
      * @var IPListService
      */
     public $service;
 
-    private static $dependencies = [
+    private static array $dependencies = [
         'service' => '%$' . IPListService::class
     ];
 
